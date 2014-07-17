@@ -71,6 +71,9 @@ printf("\n\nThreshold: %d",threshold);
   
   int prox_int;
   int freq_int;
+  int freq_int_anterior = 50000;
+  int freq_int_anterior_anterior = freq_int_anterior;
+  int media; 
 
   memset(buf,0,sizeof(buf));
 
@@ -126,10 +129,21 @@ printf("\n\nThreshold: %d",threshold);
     msg.vector.x = prox_int;
     msg.vector.y = freq_int;
 	
-    if( prox_int > threshold)
+    
+  
+    media = (int) (freq_int_anterior+freq_int_anterior_anterior+freq_int)/3;    
+
+
+    if( media < threshold )
       msg.vector.z = 1;
     else
       msg.vector.z = 0;
+
+   freq_int_anterior_anterior = freq_int_anterior;    
+   freq_int_anterior = freq_int;     
+    
+
+
 
     msg.header.stamp=ros::Time::now();
     msg.header.frame_id="sensor";

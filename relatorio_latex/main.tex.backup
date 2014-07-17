@@ -27,14 +27,20 @@
 	\newcommand{\referencesname}{Bibliografia}
 	
 	
-	\renewcommand*\listfigurename{Indice de Figuras}
+	\renewcommand*\listfigurename{Indice de figuras}
 	
 	%%%%%%%%%% Packages
 	
 	
 	\usepackage[pdftex]{graphicx} % figuras 
-	% \usepackage{subfigure} % subfiguras ( a,b,... )
-	% \usepackage{wrapfig} % figuras ao lado de texto
+	
+	
+	%Figure side by side
+
+	%\usepackage{subfig}
+	\usepackage{graphicx}
+	\usepackage{caption}
+	\usepackage{subcaption}
 	
 	
 	\usepackage{array} % mais opções nas tabelas (m{width}, b{width}, ...)
@@ -113,7 +119,6 @@
 	
 	%Figure side by side
 	
-	\usepackage{subfig}
 	
 	%force float position
 	\usepackage{float}
@@ -218,7 +223,6 @@
 	% \normalsize \today
 	\mbox{}
 	}
-	
 
 
 	
@@ -257,61 +261,99 @@
 	 \begin{abstract} % (optional)
 	
 	 
-	\tab Neste trabalho foi adaptado o robô Roomba para a detecção de minas terrestres.
-	Foi utilizado o ROS (Robot Operating System) para fazer o controlo deste robô.
-	Com o ROS foi possível controlar os movimentos do robô através do teclado usando um terminal.\\ \tab
-	Para a detecção de minas foi utilizado o sensor \textit{LCD1000EVM}.
+	\tab Neste trabalho foi incorporado um sensor indutivo ao robô Roomba para a detecção de minas terrestres através do uso de ROS.
+	Para o controlo do robô foi necessário fazer uso de um API \cite{apiroomba} que permitisse a comunicação com o mesmo e a plataforma ROS. Com este foi possível controlar os movimentos
+	do robô através do teclado usando um terminal.\\
 	\todo{Por os manuais do sensor}
-	Este sensor devolve dois valores, o valor da proximidade e o valor da proximidade do metal. 
-	Quando na presença de metais o valor da proximidade aumenta. Com base neste princípio é possível detectar a presença de minas.
+	\tab Quando na presença de metais e usando os dados devolvidos pelo sensor - proximidade e frequência - é possivel determinar se o robô se encontra perante uma mina.
+	Com base neste princípio é possível detectar a presença de minas.
+
+
+	\end{abstract}
 	
-
-
-
-	 
-	 \end{abstract}
 	
 	
 	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=140mm,scale=1]{im2.png}
-	\caption{Roomba e Sensor LDC100EVM}\label{fig:cam}
-	\end{figure}
+	  \centering
+	  \begin{subfigure}{0.4\textwidth}
+	    \centering
+	    \includegraphics[width=36mm,scale=0.1]{robot_roomba.png}
+	    \caption{Robot Roomba}
+	    \label{fig:robot_roomba}
+	  \end{subfigure}%
+	  \begin{subfigure}{0.6\textwidth}
+	    \centering
+	    \includegraphics[width=82mm,scale=0.9]{ldc_specs.png}
+	    \caption{Componentes do LDC100EVM}
+	    \label{fig:ldc_specs}
+	  \end{subfigure}
+	  
+	  \caption{Roomba e LDC100EVM com os componentes}
+	  \label{fig:romba_ldc}
+	  \end{figure}
+	  
+	
+	  
+	
 	
 	
 	\newpage
+		
 	
 	\listoftodos
 	
 	\newpage
 	
         \tableofcontents
-	
-	\newpage
+
+        \newpage
 	
 	\listoffigures
 
-	
 	\newpage
 	
+	\section{Lista de acrónimos}
 	
+	
+	\begin{description}
+	    \item[ROS] 
+	     Robot Operation System - Sistema Operativo para Robos
+	   \item[LRC Meter]
+	   Aparelho que mede indutância, capacitância e resistência\todo{Colocar melhor}
+	   \item[PCB]
+	   Printed Circuit Board - Placa de Circuito Impresso
+	   \item[API]
+	   Aplication Programming Interface - Interface de Programação de Aplicações
+	   \item[USB]
+	   Universal Serial Bus
+	   \item[VNC]
+	   Virtual Network Computing
+	\end{description}
+      
+
+	
+	
+	
+	
+	\newpage
 	
 	\section{Descrição do problema}
 	
 	\tab Pretende-se detectar minas terrestres através do uso de um robô Roomba e de um sensor indutivo LCD1000EVM capaz de medir
-	a proximidade e a frequência associada á presença de um metal nas imediações.
-	Este sensor é composto por uma bobine em PCB, um LDC1000 que faz uso da bobine e um microcontrolador - MSP430. \\ \todo[color=brown!20]{Por a referencia da imagem que mostra isso}
+	a proximidade e a frequência associada á presença de um metal nas imediações. 
+	Este sensor é composto por uma bobine em PCB, um LDC1000 que faz uso da bobine e um microcontrolador - MSP430, tal como se pode observar na
+	figura \ref{fig:ldc_specs}. \\
 	\tab Para ser possivel a concretização deste projecto é necessário implementar uma interface de comunicação entre
 	o computador e o sensor para a aquisição de dados. Esta interface vai ser baseada num protocolo de comunicação que terá
 	que ser o mesmo que é usado pelo microcontrolador. Será portanto necessário entender bem o protocolo visto que toda a base
 	deste projecto se baseia neste sensor. \\
 	\tab Após a interligação entre o sensor e o computador através de uma porta USB é necessário combinar o robô Roomba com o sensor utilizando a plataforma ROS \footnote{Distribuição Hydro}.
-	Para isso é obrigatório fazer uso de transformadas ($tf's$) para referenciar o sensor ao eixo/referencial em relação ao referencial principal do robô. 
+	Para isso é obrigatório fazer uso de transformadas ($tf's$) para referenciar o sensor ao eixo/referencial em relação ao referencial principal do robô. Mais á frente no relatório explicaremos melhor o conceito
+	e a maneira como interligamos as transformações na nossa implementação
 	Este passo é importantissimo para que se possa calcular as posições onde o sensor detecta minas.
-	\todo[color=blue!20]{Dizer que mais abaixo vou explicar o conceito das tf's}
 
 	
-	\section{Conhecimentos Necessários}
+	\section{Conhecimentos necessários}
 
 	
 	\tab Após analisarmos os requisitos deste projecto chegámos á conclusão de que era necessário familiarizarmos
@@ -319,11 +361,6 @@
 	Após concluidos os tutoriais, ficamos aptos a usar ROS usando C++ como linguagem de programação. \\
 	\tab Os seguintes conceitos/utilidades foram usados no nosso projecto, a sua explicação breve apresenta-se
 	abaixo:
-	
-	
-	
-	
-	
 	
 	\begin{description}
 	    \item[Tf] \hfill \\
@@ -346,6 +383,7 @@
 	
 	\section{Material disponível}
 	
+	  \todo[inline]{Melhorar e completar a lista de material!!!}
 	
 	\begin{description}
 	  \item[Robô e API] Roomba 555 com interface USB e \textit{Wrapper} para comunicar com o robô
@@ -371,7 +409,7 @@
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=140mm,scale=1]{im1.JPG}
+	\includegraphics[width=90mm,scale=0.3]{im1.JPG}
 	\caption{Zona a tracejado}\label{fig:sensor}
 	\end{figure}
 	
@@ -380,11 +418,11 @@
 	
 	
 	\begin{enumerate}
-	  \item A freqência de ressonância deve estar compreendida entre 5 kHz e 5 MHz
+	  \item A frequência de ressonância deve estar compreendida entre 5 kHz e 5 MHz
 	  \item A resistência de ressonância\footnote{Simboliza as perdas associadas ás correntes de Eddy} deve estar compreendida entre 798$\Omega$ e 3.93 M$\Omega$
 	\end{enumerate}
 
-	Para o calculo da freqência e a respectiva resistência usa-se as seguintes fórmulas:
+	Para o cálculo da frequência e a respectiva resistência usa-se as seguintes fórmulas:
 	
 	\begin{multicols}{2}
 	
@@ -400,7 +438,7 @@
 	\end{multicols}
 	
 	
-	Tendo em conta \eqref{freq_ress} e \eqref{r_ress} podemos dimensionar\cite{ldc1000evm} uma nova bobine para o sensor.
+	Tendo em conta \eqref{freq_ress} e \eqref{r_ress} podemos dimensionar \cite{ldc1000evm} uma nova bobine para o sensor.
 	Para garantir que a bobine juntamente com o novo condensador estão em contacto com o sensor
 	deve-se soldar um adaptador na placa que permite a fácil colocação de elementos através de uma chave
 	de fendas.
@@ -408,7 +446,7 @@
 	
 	
 	
-	Para calcular a indutância\cite{ldc1000_datasheet} medida pelo sensor é necessário fazer uso da frequência medida pelo LDC100EVM. Para tal:
+	Para calcular a indutância \cite{ldc1000_datasheet} medida pelo sensor é necessário fazer uso da frequência medida pelo LDC100EVM. Para tal:
 	
 	\begin{equation}
 	 L_\text{medida} = \frac{1}{C* (2\pi f_\text{sensor})^2}
@@ -416,11 +454,6 @@
 
 	
 	
-\href{run:./code/c++.cpp}{\color{RoyalBlue}Codigo C++} 
-
-\href{run:./code/python.py}{\color{RoyalBlue}Codigo Python}
-
-\href{run:./code/matlab.m}{\color{RoyalBlue}Codigo Matlab}
 
 	
 	\newpage
@@ -429,77 +462,151 @@
 	
 	
 	\subsection{Hardware}
+	\missingfigure{Falta a imagem do sensor soldado na PCB...}
+	 \todo[inline]{Explicar que usamos o teclado na arquitectura!}
+	 Como podemos ver na figura, soldamos os componentes numa placa PCB de modo a facilitar
+	a mudança de bobines e para garantir que o circuito está em contacto com os componentes.
+	
+	
+	Em termos de ligações é mais facil de compreender na figura abaixo,
+	onde é possivel ver a ligação dos componentes ao Roomba e ao sensor.
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=150mm,scale=3]{roomba.png}
-	\caption{Estrutura}\label{fig:roomba2}
+	\includegraphics[width=100mm,scale=0.7]{roomba.png}
+	\caption{Estrutura do robô Roomba com o sensor LDC100EVM }\label{fig:roomba2}
 	\end{figure}
 	
 	
 	\subsubsection{Arquitectura}
 	Em termos de hardware para este trabalho foi utilizado um computador que vai controlar o Roomba e o sensor LCD1000EVM.
-	No sensor foi ainda substituída a bobine que vinha com o mesmo por uma bobine e um condensador de valores por nós pretendidos.
-	
-	\subsubsection{Implementação}
+	No sensor foi ainda substituída a bobine que vinha com o mesmo por uma bobine e um condensador de valores por nós pretendidos. \\
 	O robô Roomba encontra-se conectado por usb a um computador que o controla.
-	Este computador encontra-se ainda ligado a um sensor LCD1000EVM que por sua vez tem ligado a si uma bobine e um condensador por nós projectados e adaptados.
+	Este computador encontra-se ainda ligado a um sensor LCD1000EVM que por sua vez tem ligado a si uma bobine e um condensador por nós projectados e adaptados. \todo{Colocar a estrutura da bobine no robo - fotografia}
+	
+	\newpage
+	
+	
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=150mm,scale=3]{circuito1.png}
+	\includegraphics[width=100mm,scale=0.5]{circuito1.png}
 	\caption{Circuito do Sensor}\label{fig:roomba3}
 	\end{figure}
 	
-	Na presença de materiais conFdutores o valor de Rs e de L vão variar. Por intermédio da seguinte equação: \begin{equation}\label{rp}   
-	R_p= \frac{1}{R_s}\times\frac{L}{C}
-	\end{equation}  é possível aproximar o circuito da seguinte forma:
-	
+	Por intermédio de \eqref{r_ress} é possível aproximar o circuito da seguinte forma:
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=150mm,scale=3]{circuito2.png}
-	\caption{Circuito do Sensor}\label{fig:roomba4}
+	\includegraphics[width=100mm,scale=0.5]{circuito2.png}
+	\caption{Circuito Simplificado}\label{fig:roomba4}
 	\end{figure}
-	\newpage
-	Existe apenas uma condição para o bom funcionamento deste circuito com este sensor para: 
 	
 	
-	\begin{equation}\label{Frequência}
-	f_o = \frac{\omega_o}{2\pi} = \frac{1}{2 \pi \sqrt{LC}}
-	\end{equation}
 	
-	 $f_o$ tem que estar compreendido entre 0.5Khz e 0.5Mhz. \\
-Como tal desde que estas condições sejam cumpridas pode ser utilizada qualquer bobine, adaptando assim o sensor para diferentes situações por nós pretendidas. Tendo que ter em atenção que o sensor tem que se encontrar na gama de valores a cima referida, variando o valor do condensador garantimos que isso acontece.\\ \tab É apenas necessário a alteração dos registos da placa, para que estejam adequados ao novo circuito. Os registos a serem modificados são relativos ao $R_P$, mais especificamente ${R_P}_{MAX}$ e ${R_P}_{MIN}$ e à frequência $f_o$. O método mais simples para 
+	
+
+	\subsubsection{Implementação}
+	Como foi anteriormente explicado,  o circuito pode ser alterado e dimensionado para se trabalhar na gama de valores desejada. A seguir iremos explicar os passos necessários para implementar o novo circuito e adaptá-lo ao sensor.
+	\setlength{\parskip}{10pt}
+	
+	\begin{enumerate}
+	  \item O primeiro passo será escolher simplesmente a nova bobine por nós pretendida, de seguida escolhemos um condensador que permita cumprir as condições impostas à frequência de ressonância\eqref{freq_ress} e à resistência de ressonância\eqref{r_ress}.
+	  \item O próximo passo será com o auxílio de um ``LCR meter'', colocando as pontas deste medidor em paralelo com o paralelo do condensador e da bobine que escolhemos têmos que anotar o valor da resistência $R_p$ lido no medidor, na ausênsia 
+	  de qualquer objecto magnético.
+	  \item Neste passo temos que colocar um objecto magnético o mais próximo possível da bobine e anotar o novo valor de $R_p$.
+	  \item É necessário anotar também a frequência de varrimento que se encontra definida no medidor.
+	  \item O passo seguinte é actualizar os registos do sensor para que se adapte ao novo circuito. Para modificar os registos é necessário conectar o sensor a um computador coondutoresm windows e utilizando a gui application fornecida pela texas instruments
+	  na secção de alteração dos registos terêmos que modificar três registos. O valor de ${R_p}_{MAX}$ deve ser alterado para o dobro do valor anotado na ausência de objectos c, como os valores disponíveis são discretos deve ser escolhido
+	  o mais próximo deste valor por excesso. O valor de ${R_p}_{MIN}$ deve ser alterado para metade do valor anotado na presença de um objecto condutor, como os valores disponíveis são discretos deve ser escolhido
+	  o mais próximo deste valor por defeito. O registo da freqûencia deve ser alterado para no máximo $\frac{8}{10}$ do valor da frequência de varrimento. 
+	  \item Por fim é necessário partir o sensor onde diz ``coil perfuration'' na figura \ref{fig:roomba5} e soldar o paralelo da bobine e do condensador no sítio onde diz ``conections for custom LC tank'' na  figura \ref{fig:roomba5}.
+	 
+	\end{enumerate}
 
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=150mm,scale=3]{circuito3.png}
-	\caption{Circuito do Sensor}\label{fig:roomba5}
+	\includegraphics[width=100mm,scale=0.3]{circuito3.png}
+	\caption{LCD1000EVM com indicação das perfurações}\label{fig:roomba5}
 	\end{figure}
-	\newpage
 	
 	
+	
+		\todo[inline]{Colocar com imagens e explicações os passos em específicos}
+	
+	
+	
 	\newpage
-\section{Solução proposta: Software -Implementação}
 
-\subsection{Utilização do ROS}
+	\subsection{Software}
+	
+	\todo[inline]{Colocar o pseudo Código}
+
+	
+	  \subsubsection{Pseudocódigo}
+	
+      \subsubsection{Utilização do ROS}
 
 \tab Utilizámos o Robot Operating System (ROS) como plataforma de comunicação entre os dois periféricos por nós utilizados e o computador. Com o ROS é possível implementar bibliotecas de cliente ROS como roscpp, rospy ou roslisp. Por outras palavras significa que facilmente se consegue adaptar programas criados em outras línguas (de entre C++, Python e LISP). No nosso caso em específico adaptámos o programa de leitura do sensor em cpp para a plataforma ROS. Numa segunda parte através do api disponibilizado pelo Gonçalo Cabrita e pelo Bruno Gouveia conseguimos controlar o Roomba pelo teclado do computador. Através da leitura dos encoders e do controlo dos motores foi possível controlar a velocidade angular e linear do robô. \\ \tab Utilizando os nós do ROS foi possível assim controlar o robô e utilizá-lo para a deteção e marcação nas minas. De uma forma mais detalhada foi usada como referência a transformada "ODOM" que nos fornece a posição inicial em que o robô se encontra, com o nó entre esta transformada e o base link do Roomba sabe-se sempre a posição relativa à posição inicial. De seguida criando o nó da transformada sensor(criada por nós) é assim possível, com a informação devolvida pelo sensor, saber se o robô se encontra na presença de uma mina. Caso seja verificada a presença de uma mina são enviadas as coordenadas (x,y,z) para uma função "markers" que irá marcar no mapa as minas em relação a "ODOM", ou seja em relação à posição inicial do robô.
 
-\subsection{Comunicação com o sensor}
+
+	\subsubsection{Comunicação com o sensor}
 
 
-\tab A primeira parte deste trabalho foi concluir que o sensor utiliza porta série como protocolo de comunicação quando comunica com o computador. Como tal, para facilitar o uso futuro deste sensor criámos código para as leituras do sensor em três plataformas diferentes de programação. Adaptámos por isso o nosso código às plataformas \textit{C++}, \textit{Matlab} e \textit{Python}. Estes três códigos encontram-se mais a baixo na tabela(Fazer referencia à tabela). \\ \tab Analisando as partes mais importantes do código, o primeiro passo é definir a porta série pela qual estamos a comunicar, no nosso caso em particular foi a porta "'COM9'". De seguida definimos o tipo de controlo de fluxo, que neste caso é do tipo "software flow control". É necessário definir a frequência de comunicação, Baud Rate, que foi definida por nós a 9600. O próximo passo é definir a paridade e o número de bits da comunicação, neste caso não existe paridade e são utilizados 8bits na comunicação. Tal como na maioria dos dispositivos electrónicos na comunicação por porta série apenas é necessário de 1 "stop bit", foi ainda definido o tempo de espera para leitura máximo("Timeout") a 5 segundos. Definimos o modo de leitura contínua para funcionar de forma assíncrona. Por fim ao escrever na porta série o comando 0x33(hexadecimal) ou 3(ASCII), iniciamos a stream de dados. 
+	\tab A primeira parte deste trabalho foi concluir que o sensor utiliza porta série como protocolo de comunicação quando comunica com o computador.
+	Como tal, para facilitar o uso futuro deste sensor criámos código para as leituras do sensor em três plataformas diferentes de programação.
+	Adaptámos por isso o nosso código às plataformas \textit{C++}, \textit{Matlab} e \textit{Python}.
+	Estes três códigos encontram-se mais a baixo na tabela(Fazer referencia à tabela).\\
+	\tab Analisando as partes mais importantes do código, o primeiro passo é definir a porta série pela qual estamos a comunicar, no nosso caso em particular
+	foi a porta "COM9" em \textit{Windows} e "/dev/ttyACM" em \textit{Linux}.
+	De seguida definimos o tipo de controlo de fluxo, que neste caso é do tipo "software flow control".
+	É necessário definir a frequência de comunicação, Baud Rate, que foi definida por nós a 9600.
+	O próximo passo é definir a paridade e o número de bits da comunicação, neste caso não existe paridade e são utilizados 8bits na comunicação.
+	Tal como na maioria dos dispositivos electrónicos na comunicação por porta série apenas é necessário de 1 "stop bit", foi ainda definido o tempo
+	de espera para leitura máximo("Timeout") a 5 segundos. Definimos o modo de leitura contínua para funcionar de forma assíncrona.
+	Por fim ao escrever na porta série o comando 0x33(hexadecimal) ou 3(ASCII), iniciamos a stream de dados. 
+
+				
+	\href{run:./code/c++.cpp}{\color{RoyalBlue}Codigo C++}
+
+	\href{run:./code/python.py}{\color{RoyalBlue}Codigo Python}
+
+	\href{run:./code/matlab.m}{\color{RoyalBlue}Codigo Matlab}
 
 	
+	\subsubsection{Protocolo VNC}
 	
+	 Este protocolo baseia-se no conceito de partilha remota de um computador. Para isso existe um computador que partilha o monitor
+	 e os controlos 
+	 VNC é baseado foi desenvolvido através do protocolo TCP/IP, o que implica que é capaz de funcionar via internet.
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=90mm,scale=1]{vnc.png}
+	\caption{Protocolo VNC}\label{fig:vnc}
+	\end{figure}
+	
+	
+	
+	
+	\section{Resultados}
+	
+	\todo[inline]{Colocar a simulação rviz}
+	\todo[inline]{Robo a andar com rviz activo}
+	\todo[inline]{Foto a controlar com o keyboard e a detectar minas}
 	
 	
 	\section{Conclusões}
 	
 
-	\href{run:./code/a.cpp}{\color{RoyalBlue}Codigo C++}
+         
+       \tab Com este projecto foi possível adaptar o robô ROOMBA para a deteção de minas com o auxílio do sensor LCD1000EVM. Numa primeira parte do projecto foi criada a interface para que o sensor pudesse ser utilizado em Linux. Com o auxílio 
+	da plataforma ROS (Robot Operatyng System) foi possível fazer a comunicação dos três periféricos ( computador, robô e sensor) esta plataforma permitiu ainda criar o controlo por teclado da velocidade e direcção do robô. Por fim
+	foi possível adptar o sensor para uma bobine por nós desejada.\\ \tab Este projecto permitiu perceber a potencialidade tanto da plataforma ROS como do sensor LCD1000EVM. A grande vantagem da plataforma ROS é que no futuro muito facilmente
+	qualquer pessoa poderá adaptar este sensor a outros robôs ou outros sistemas robóticos, é a vantagem do sistema de transformadas em que o ROS trabalha. O sensor LCD1000EVM tem a grande vatagem de com alguns pequenos passos se poder modificar para qualquer bobine 
+	que o utilizador pretenda criando-se assim um sensor à medida do que o utilizador precisa.
+
+
          
        
 

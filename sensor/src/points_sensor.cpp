@@ -111,7 +111,7 @@ private:
             tf_.transformPoint(target_frame_, point_in, point_out);
 
             // Note that z is the position of the coil, not the position of the possible metal sample!
-             ROS_INFO("Coil %s with data ch0 %f ch1 %f ch2 %f at x %f y %f z %f",
+             ROS_INFO("\nFrame ID: %s \nProximidade: %f \nFrequencia: %f \nMina: %f  \nPosicao (x,y,z): (%f,%f,%f)\n",
                 coil_ptr->header.frame_id.c_str(),
                 coil_ptr->vector.x,
                 coil_ptr->vector.y,

@@ -264,7 +264,6 @@
 	\tab Neste trabalho foi incorporado um sensor indutivo ao robô Roomba para a detecção de minas terrestres através do uso de ROS.
 	Para o controlo do robô foi necessário fazer uso de um API \cite{apiroomba} que permitisse a comunicação com o mesmo e a plataforma ROS. Com este foi possível controlar os movimentos
 	do robô através do teclado usando um terminal.\\
-	\todo{Por os manuais do sensor}
 	\tab Quando na presença de metais e usando os dados devolvidos pelo sensor - proximidade e frequência - é possivel determinar se o robô se encontra perante uma mina.
 	Com base neste princípio é possível detectar a presença de minas.
 
@@ -319,7 +318,7 @@
 	    \item[ROS] 
 	     Robot Operation System - Sistema Operativo para Robos
 	   \item[LRC Meter]
-	   Aparelho que mede indutância, capacitância e resistência\todo{Colocar melhor}
+	   Aparelho que mede indutância, capacitância e resistência de um componente \cite{lrc}
 	   \item[PCB]
 	   Printed Circuit Board - Placa de Circuito Impresso
 	   \item[API]
@@ -383,21 +382,22 @@
 	
 	\section{Material disponível}
 	
-	  \todo[inline]{Melhorar e completar a lista de material!!!}
 	
 	\begin{description}
-	  \item[Robô e API] Roomba 555 com interface USB e \textit{Wrapper} para comunicar com o robô
-	  \item[Sensor de Metal] LDC100EVM
-	  \item[Computador] Portatil de pequenas dimensões com o sistema operativo Ubuntu\footnote{Ubuntu 13.04}
-	  \item[Bobine] 1.5 mH
-	  \item[Condensador] 19.2nF
-	  \item[ROS] Plataforma ROS
+	  \item[Robô] Robô Roomba 555 com interface USB
+	  \item[API] \textit{Wrapper} para comunicar com o robô 
+	  \item[Detector de Metal] LDC100EVM
+	  \item[Computador] Dois portateis(um pequeno e um grande) com o sistema operativo Ubuntu\footnote{Ubuntu 13.04}
+	  \item[Bobine] 1.71 mH
+	  \item[Condensador] 3.09 nF
+	  \item[LCR Meter] Versão 186
+	  \item[Teclado] Teclado Wireless
+	  \item[USB Hub] Quatro portas
 	\end{description}
 
 
 	
 	
-	\newpage
 	\section{LDC100EVM}
 	
 	
@@ -410,8 +410,11 @@
 	\begin{figure}[ht]
 	\centering
 	\includegraphics[width=90mm,scale=0.3]{im1.JPG}
-	\caption{Zona a tracejado}\label{fig:sensor}
+	\caption{Sensor LDC1000EVM}\label{fig:sensor}
 	\end{figure}
+	
+	
+	
 	
 	
 	Para dimensionar a bobine é necessário satisfazer duas condições para que o sensor possa funcionar na gama ideal:
@@ -422,6 +425,10 @@
 	  \item A resistência de ressonância\footnote{Simboliza as perdas associadas ás correntes de Eddy} deve estar compreendida entre 798$\Omega$ e 3.93 M$\Omega$
 	\end{enumerate}
 
+	
+	
+	
+	
 	Para o cálculo da frequência e a respectiva resistência usa-se as seguintes fórmulas:
 	
 	\begin{multicols}{2}
@@ -432,44 +439,67 @@
 	
 	\begin{equation}\label{r_ress}
 	 R_p = \frac{1}{R_s} \frac{L}{C}
-	\end{equation}
+	\end{equation}	
 
-
-	\end{multicols}
-	
-	
-	Tendo em conta \eqref{freq_ress} e \eqref{r_ress} podemos dimensionar \cite{ldc1000evm} uma nova bobine para o sensor.
-	Para garantir que a bobine juntamente com o novo condensador estão em contacto com o sensor
-	deve-se soldar um adaptador na placa que permite a fácil colocação de elementos através de uma chave
-	de fendas.
-	
-	
-	
-	
-	Para calcular a indutância \cite{ldc1000_datasheet} medida pelo sensor é necessário fazer uso da frequência medida pelo LDC100EVM. Para tal:
-	
-	\begin{equation}
-	 L_\text{medida} = \frac{1}{C* (2\pi f_\text{sensor})^2}
-	\end{equation}
-
+	\end{multicols} 
 	
 	
 
-	
 	\newpage
+	
+	
+	
+	Abaixo encontra-se representado o esquemático do circuito que dá origem ás equações \eqref{freq_ress} e \eqref{r_ress} acima descritas:
+	
+	
+	
+	
+	\begin{figure}[ht]
+	  \centering
+	  \begin{subfigure}{0.5\textwidth}
+	    \centering
+	    \includegraphics[width=75mm,scale=0.9]{circuito1.png}
+	    \caption{Circuito físico}
+	    \label{fig:roomba3}
+	  \end{subfigure}%
+	  \begin{subfigure}{0.5\textwidth}
+	    \centering
+	    \includegraphics[width=75mm,scale=0.9]{circuito2.png}
+	    \caption{Circuito simplificado}
+	    \label{fig:roomba4}
+	  \end{subfigure}
+	  
+	  \caption{Esquemático do sensor}
+	  \label{fig:romba_ldc_2}
+	  \end{figure}
+	
+	É importante referir que o circuito presente na figura \ref{fig:roomba3} é o circuito real do sensor e o da figura \ref{fig:roomba4} é uma simplificação
+	que em termos prácticos permite ao sensor variar a sua gama de funcionamento afinado o valor minimo e máximo de R\textsubscript{p}. Este processo faz com que
+	o sensor possa discriminar diferentes tipos de metal se bem afinado e projectado.	
+	
+	
+	
+	
 	\section{Solução proposta}
 	
 	
-	
 	\subsection{Hardware}
-	\missingfigure{Falta a imagem do sensor soldado na PCB...}
-	 \todo[inline]{Explicar que usamos o teclado na arquitectura!}
-	 Como podemos ver na figura, soldamos os componentes numa placa PCB de modo a facilitar
-	a mudança de bobines e para garantir que o circuito está em contacto com os componentes.
+	
+	 Como podemos ver na figura \ref{fig:circuito4}, foi soldado numa placa PCB o condensador e foram feitas as ligações necessárias de modo a facilitar
+	a mudança de bobines e para garantir que o circuito está em contacto com os componentes. Foi ainda soldado ao sensor dois fifos conectores para tornar mais fácil o seu uso.
 	
 	
-	Em termos de ligações é mais facil de compreender na figura abaixo,
-	onde é possivel ver a ligação dos componentes ao Roomba e ao sensor.
+	
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=50mm,scale=0.7]{circuito4.jpg}
+	\caption{Placa PCB + Sensor }\label{fig:circuito4}
+	\end{figure}
+	
+	Em termos de ligações é mais facil de compreender na figura \ref{fig:roomba2},
+	onde é possivel ver a ligação dos componentes ao Roomba e ao sensor. O computador vai comunicar com o Roomba e receber dados do sensor.
+	Através da plataforma ROS é feito o controlo do Roomba por teclado e feita a interligação dos dados enviados pelo sensor e o robô. 
 	
 	\begin{figure}[ht]
 	\centering
@@ -477,62 +507,115 @@
 	\caption{Estrutura do robô Roomba com o sensor LDC100EVM }\label{fig:roomba2}
 	\end{figure}
 	
-	
+	\newpage
 	\subsubsection{Arquitectura}
-	Em termos de hardware para este trabalho foi utilizado um computador que vai controlar o Roomba e o sensor LCD1000EVM.
+	\tab Em termos de hardware para este trabalho foi utilizado um computador que vai controlar o Roomba e o sensor LCD1000EVM.
 	No sensor foi ainda substituída a bobine que vinha com o mesmo por uma bobine e um condensador de valores por nós pretendidos. \\
-	O robô Roomba encontra-se conectado por usb a um computador que o controla.
-	Este computador encontra-se ainda ligado a um sensor LCD1000EVM que por sua vez tem ligado a si uma bobine e um condensador por nós projectados e adaptados. \todo{Colocar a estrutura da bobine no robo - fotografia}
+	\tab O robô Roomba encontra-se conectado por usb a um computador que o controla.
+	Este computador encontra-se ainda ligado a um sensor LCD1000EVM que por sua vez tem ligado a si uma bobine e um condensador por nós projectados e adaptados.\\
+	\tab Na figura \ref{fig:robo} é vísivel o robô já adaptado à nova bobine. Foi necessário criar uma estrutura que suportasse a bobine mas que mantivesse a estabilidade do robô,
+	para tal é necessário o uso de contra-pesos como é vísivel.
 	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=65mm,scale=0.7]{circuitom.jpg}
+	\caption{Imagem real do robô}\label{fig:robo}
+	\end{figure}
 	\newpage
 	
 	
-	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=100mm,scale=0.5]{circuito1.png}
-	\caption{Circuito do Sensor}\label{fig:roomba3}
-	\end{figure}
-	
-	Por intermédio de \eqref{r_ress} é possível aproximar o circuito da seguinte forma:
-	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=100mm,scale=0.5]{circuito2.png}
-	\caption{Circuito Simplificado}\label{fig:roomba4}
-	\end{figure}
+	  
 	
 	
 	
 	
-
+	
+\newpage
 	\subsubsection{Implementação}
 	Como foi anteriormente explicado,  o circuito pode ser alterado e dimensionado para se trabalhar na gama de valores desejada. A seguir iremos explicar os passos necessários para implementar o novo circuito e adaptá-lo ao sensor.
 	\setlength{\parskip}{10pt}
 	
 	\begin{enumerate}
-	  \item O primeiro passo será escolher simplesmente a nova bobine por nós pretendida, de seguida escolhemos um condensador que permita cumprir as condições impostas à frequência de ressonância\eqref{freq_ress} e à resistência de ressonância\eqref{r_ress}.
+	  \item O primeiro passo será escolher simplesmente a nova bobine por nós pretendida e escolher um condensador que permita cumprir as condições impostas à frequência de ressonância\eqref{freq_ress} e à resistência de ressonância\eqref{r_ress}.
 	  \item O próximo passo será com o auxílio de um ``LCR meter'', colocando as pontas deste medidor em paralelo com o paralelo do condensador e da bobine que escolhemos têmos que anotar o valor da resistência $R_p$ lido no medidor, na ausênsia 
 	  de qualquer objecto magnético.
 	  \item Neste passo temos que colocar um objecto magnético o mais próximo possível da bobine e anotar o novo valor de $R_p$.
 	  \item É necessário anotar também a frequência de varrimento que se encontra definida no medidor.
-	  \item O passo seguinte é actualizar os registos do sensor para que se adapte ao novo circuito. Para modificar os registos é necessário conectar o sensor a um computador coondutoresm windows e utilizando a gui application fornecida pela texas instruments
-	  na secção de alteração dos registos terêmos que modificar três registos. O valor de ${R_p}_{MAX}$ deve ser alterado para o dobro do valor anotado na ausência de objectos c, como os valores disponíveis são discretos deve ser escolhido
-	  o mais próximo deste valor por excesso. O valor de ${R_p}_{MIN}$ deve ser alterado para metade do valor anotado na presença de um objecto condutor, como os valores disponíveis são discretos deve ser escolhido
-	  o mais próximo deste valor por defeito. O registo da freqûencia deve ser alterado para no máximo $\frac{8}{10}$ do valor da frequência de varrimento. 
+	  \item No passo seguinte é necessário actualizar os registos do sensor para que se adapte ao novo circuito. Para modificar os registos é necessário conectar o sensor a um computador coondutoresm windows e utilizando a gui application fornecida pela texas instruments
+	  na secção de alteração dos registos terêmos que modificar três registos. O valor do registo ${R_p}_{MAX}$ deve ser alterado para o dobro do valor anotado na ausência de objectos c, como os valores disponíveis são discretos deve ser escolhido
+	  o mais próximo deste valor por excesso. O valor do registo ${R_p}_{MIN}$ deve ser alterado para metade do valor anotado na presença de um objecto condutor, como os valores disponíveis são discretos deve ser escolhido
+	  o mais próximo deste valor por defeito. O registo da freqûencia deve ser alterado para no máximo $80\%$ do valor da frequência de varrimento. 
 	  \item Por fim é necessário partir o sensor onde diz ``coil perfuration'' na figura \ref{fig:roomba5} e soldar o paralelo da bobine e do condensador no sítio onde diz ``conections for custom LC tank'' na  figura \ref{fig:roomba5}.
 	 
 	\end{enumerate}
 
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=100mm,scale=0.3]{circuito3.png}
+	\includegraphics[width=70mm,scale=0.6]{circuito3.png}
 	\caption{LCD1000EVM com indicação das perfurações}\label{fig:roomba5}
+	\end{figure}
+	
+	\newpage
+	Com o auxílio do medidor ``LCR meter'' figura \ref{fig:LCR} conseguimos adaptar o sensor à nova bobine. Para cumprir o primeiro passo referido anteriormente, primeiro medimos a indutância da nova bobine e de seguida escolhemos
+	um condensador e medimos a sua capacitância como mostra a figura \ref{fig:LC}.
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=70mm,scale=0.3]{LCR.jpg}
+	\caption{LCR Meter 186}\label{fig:LCR}
 	\end{figure}
 	
 	
 	
-		\todo[inline]{Colocar com imagens e explicações os passos em específicos}
+	\tab Tivemos que garantir que o novo circuito se encontra na gama da frequência de ressonância, como tal utilizando a \eqref{freq_ress} calculámos a nova frequência de ressonânica e obtivemos:
+	
+	\begin{equation}\label{freqr}
+	 f_\text{ressonância} = \frac{1}{2\pi\sqrt{LC}}=\frac{1}{2\pi\sqrt{1.7098\times10^{-3}\times3.0863\times10^{-9}}}=69.283KH_z
+	\end{equation}
+	Verifica-se que a nova frequência de ressonância se encontra entre $5KH_z$ e $5MH_z$
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm,scale=0.3]{LC.png}
+	\caption{Medição da indutância da bobine e da capacitância do condensador}\label{fig:LC}
+	\end{figure}
+	
+	De seguida anotámos o valor de $R_p$ na ausência e na presença de objectos condutores como é visível nas imagens \ref{fig:rpmax} e \ref{fig:rpmin} respectivamente. Foi ainda anotada a frequência de varrimento
+	que é vísivel em qualquer uma das imagens seguintes, sendo o seu valor $66.667KH_z$.
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=70mm,scale=0.3]{RP_MAX.jpg}
+	\caption{Resistência do paralelo ($R_p$) na ausência de objectos condutores}\label{fig:rpmax}
+	\end{figure}
+	\todo[inline]{Colocar as duas unidas}
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=70mm,scale=0.3]{RP_MIN.jpg}
+	\caption{Resistência do paralelo ($R_p$) na presença de objectos condutores}\label{fig:rpmin}
+	\end{figure}
+	
+	\newpage
+	
+	Garantimos assim que também a resistência de ressonância se encontra dentro da gama de valores do referidos anteriormente.
+	Por fim, fizémos a alteração dos registos do sensor para se adaptar aos novos valores, pelo que foram modificados os seguintes registos :
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm,scale=0.3]{registos.png}
+	\caption{Registos do sensor LDC1000EVM}\label{fig:registos}
+	\end{figure}
+	
+	
+	\begin{enumerate}
+	 \item $RP_{MAX}$ foi alterado para $38.785K\Omega$ , valor que foi aproximado por excesso como era exigido.
+	 \item $RP_{MIN}$ foi alterado $4.309K\Omega$, valor que foi aproximado por defeito como era exigido.
+	 \item Sensor frequency foi alterado para $52.231KH_z$ , valor que foi aproximado para o valor mais próximo de $80\%$ da frequência de varrimento, por defeito.
+	\end{enumerate}
+	
+	Os registos que foram alterados encontram-se a vermelhor na figura \ref{fig:registos}.
+Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
+
 	
 	
 	
@@ -546,7 +629,6 @@
 	  \subsubsection{Pseudocódigo}
 	
       \subsubsection{Utilização do ROS}
-      
 
 \tab Utilizámos o Robot Operating System (ROS) como plataforma de comunicação entre os dois periféricos por nós utilizados e o computador. Com o ROS é possível implementar bibliotecas de cliente ROS como roscpp, rospy ou roslisp. Por outras palavras significa que facilmente se consegue adaptar programas criados em outras línguas (de entre C++, Python e LISP). No nosso caso em específico adaptámos o programa de leitura do sensor em cpp para a plataforma ROS. Numa segunda parte através do api disponibilizado pelo Gonçalo Cabrita e pelo Bruno Gouveia conseguimos controlar o Roomba pelo teclado do computador. Através da leitura dos encoders e do controlo dos motores foi possível controlar a velocidade angular e linear do robô. \\ \tab Utilizando os nós do ROS foi possível assim controlar o robô e utilizá-lo para a deteção e marcação nas minas. De uma forma mais detalhada foi usada como referência a transformada "ODOM" que nos fornece a posição inicial em que o robô se encontra, com o nó entre esta transformada e o base link do Roomba sabe-se sempre a posição relativa à posição inicial. De seguida criando o nó da transformada sensor(criada por nós) é assim possível, com a informação devolvida pelo sensor, saber se o robô se encontra na presença de uma mina. Caso seja verificada a presença de uma mina são enviadas as coordenadas (x,y,z) para uma função "markers" que irá marcar no mapa as minas em relação a "ODOM", ou seja em relação à posição inicial do robô.
 

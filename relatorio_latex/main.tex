@@ -628,11 +628,12 @@
 	\caption{Registos do sensor LDC1000EVM}\label{fig:registos}
 	\end{figure}
 	
+	\newpage
 	
 	\begin{enumerate}
-	 \item ${R_P}_{MAX}$ foi alterado para 38.785 k$\Omega$ , valor que foi aproximado por excesso como era exigido.
-	 \item ${R_P}_{MIN}$ foi alterado 4.309 k$\Omega$, valor que foi aproximado por defeito como era exigido.
-	 \item Sensor frequency foi alterado para 52.231 kHz , valor que foi aproximado para o valor mais próximo de $80\%$ da frequência de varrimento, por defeito.
+	 \item ${R_p}_{max}$ foi alterado para 38.785 k$\Omega$ , valor que foi aproximado por excesso como era exigido.
+	 \item ${R_p}_{min}$ foi alterado 4.309 k$\Omega$, valor que foi aproximado por defeito como era exigido.
+	 \item Sensor frequency foi alterado para 52.231 kHz , valor que foi aproximado para o valor mais próximo de 80$\%$ da frequência de varrimento, por defeito.
 	\end{enumerate}
 	
 	Os registos que foram alterados encontram-se a vermelhor na figura \ref{fig:registos}.
@@ -647,10 +648,10 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	
 	\subsubsection{Como executar}
 	
-	Em termos de aplicação ROS, elaboramos dois tipos de programas. O primeiro contêm um nó que lê valores do sensor e publica esses dados
+	\tab Em termos de aplicação ROS, elaboramos dois tipos de programas. O primeiro contêm um nó que lê valores do sensor e publica esses dados
 	usando mensagens e um outro nó que recebe esses dados e imprime para o ecrã. O segundo usa um ó que publica os dados por mensagens e um outro nó
-	recebe esses dados e analisa se se trata de uma mina e em caso afirmativo marca-a num mapa desenhando um cubo de pequenas dimensões na posição em que detectou a mina.
-	Abaixo encontram-se os passos necessários para os executar:
+	recebe esses dados e analisa se se trata de uma mina e em caso afirmativo marca-a num mapa desenhando um cubo de pequenas dimensões na posição em que detectou a mina. \\
+	\tab Abaixo encontram-se os passos necessários para os executar:
 	
 	
 	
@@ -705,9 +706,8 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	o robo.
 	
 	
-	
-	  
-	
+	\newpage
+
       \subsubsection{Utilização do ROS}
 
 	\tab Utilizámos o Robot Operating System (ROS) como plataforma de comunicação entre os dois periféricos por nós utilizados e o computador.
@@ -741,8 +741,8 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 		
 
 	  
-	   
-	
+
+	\newpage
 		
 	\subsubsection{Protocolo VNC}
 	
@@ -752,14 +752,7 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	 \tab Como a base do VNC foi construida/projectada sobre o protocolo TCP/IP, este é capaz de funcionar via internet.
 	 É usado em aulas interactivas onde um professor permite a visualização do seu monitor e os alunos conectam-se podendo assim visualizar os passos do professor.
 	 	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=100mm,scale=1]{vnc.png}
-	\caption{Protocolo VNC}\label{fig:vnc}
-	\end{figure}
-	
 	\textbf{Nota}: Rápido e eficaz numa rede local com boa largura de banda.
-	
 	
 	
 	
@@ -798,7 +791,6 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	  \caption{Teste para detecção de minas num labirinto}
 	  \label{fig:resultado_final}
 	  \end{figure}
-	
 	
 	
 	

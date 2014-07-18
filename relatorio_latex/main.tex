@@ -262,15 +262,15 @@
 	
 	 
 	\tab Neste trabalho foi incorporado um sensor indutivo ao robô Roomba para a detecção de minas terrestres através do uso de ROS.
-	Para o controlo do robô foi necessário fazer uso de um API \cite{apiroomba} que permitisse a comunicação com o mesmo e a plataforma ROS. Com este foi possível controlar os movimentos
+	Para o controlo do robô foi necessário fazer uso de um API\cite{apiroomba} que permitisse a comunicação com o mesmo e a plataforma ROS. Com este foi possível controlar os movimentos
 	do robô através do teclado usando um terminal.\\
 	\tab Quando na presença de metais e usando os dados devolvidos pelo sensor - proximidade e frequência - é possivel determinar se o robô se encontra perante uma mina.
-	Com base neste princípio é possível detectar a presença de minas.
-
+	Com base neste princípio é possível detectar a presença de minas. \\
 
 	\end{abstract}
 	
-	
+	  	
+
 	
 	\begin{figure}[ht]
 	  \centering
@@ -315,20 +315,66 @@
 	
 	
 	\begin{description}
-	    \item[ROS] 
+	    \item[ROS] \hfill \\
 	     Robot Operation System - Sistema Operativo para Robos
-	   \item[LRC Meter]
-	   Aparelho que mede indutância, capacitância e resistência de um componente \cite{lrc}
-	   \item[PCB]
+	   \item[LRC Meter] \hfill \\
+	   Aparelho que mede indutância, capacitância e resistência de um componente\cite{lrc}
+	   \item[PCB] \hfill \\
 	   Printed Circuit Board - Placa de Circuito Impresso
-	   \item[API]
+	   \item[API] \hfill \\
 	   Aplication Programming Interface - Interface de Programação de Aplicações
-	   \item[USB]
+	   \item[USB] \hfill \\
 	   Universal Serial Bus
-	   \item[VNC]
+	   \item[VNC] \hfill \\
 	   Virtual Network Computing
 	\end{description}
       
+
+      
+	
+	
+	\section{Material disponível}
+	
+	
+	
+		
+	\begin{description}
+	  \item[Computadores] \hfill
+	  \begin{description}
+	    \item Notebook
+	    \item Netbook
+	  \end{description}
+	  \end{description}
+	  
+	  \begin{description}
+	  \item[Componentes/Aparelhos Electrónicos] \hfill
+	  \begin{description}
+	  \item Bobine de 1.71 mH 
+	  \item Condensador de 3.09 nF
+	  \item LRC Meter - Modelo 186
+	  \end{description}
+	  \end{description}
+	  
+	  
+	  \begin{description}
+	  \item[Robô Detector de Minas] \hfill
+	  \begin{description}
+	  \item Robô Roomba 555
+	  \item Detector de Metais - LDC1000EVM
+	  \item Api/Wrapper para comunicação com o Romba
+	  \end{description}
+	  \end{description}
+	  
+
+ 	  
+	
+	\begin{description}
+	  \item[Acessórios] \hfill
+	  \begin{description}
+	    \item Teclado Wireless
+ 	  \item USB Hub com quatro portas 
+	  \end{description}
+	  \end{description}
 
 	
 	
@@ -356,7 +402,7 @@
 
 	
 	\tab Após analisarmos os requisitos deste projecto chegámos á conclusão de que era necessário familiarizarmos
-	com a plataforma ROS. Sendo assim seguimos os tutoriais existentes no website WikiRos \cite{wikiros}.
+	com a plataforma ROS. Sendo assim seguimos os tutoriais existentes no website WikiRos\cite{wikiros}.
 	Após concluidos os tutoriais, ficamos aptos a usar ROS usando C++ como linguagem de programação. \\
 	\tab Os seguintes conceitos/utilidades foram usados no nosso projecto, a sua explicação breve apresenta-se
 	abaixo:
@@ -376,29 +422,40 @@
 	
 	
 	
+	\section{Solução proposta}
 	
+	
+	\subsection{Hardware}
+	
+	 Como podemos ver na figura \ref{fig:circuito4}, foi soldado numa placa PCB o condensador e foram feitas as ligações necessárias de modo a facilitar
+	a mudança de bobines e para garantir que o circuito está em contacto com os componentes. Foi ainda soldado ao sensor dois fifos conectores para tornar mais fácil o seu uso.
+	
+	
+	
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=50mm,scale=0.7]{circuito4.jpg}
+	\caption{Placa PCB + Sensor }\label{fig:circuito4}
+	\end{figure}
+	
+	Em termos de ligações é mais facil de compreender na figura \ref{fig:roomba2},
+	onde é possivel ver a ligação dos componentes ao Roomba e ao sensor. O computador vai comunicar com o Roomba e receber dados do sensor.
+	Através da plataforma ROS é feito o controlo do Roomba por teclado e feita a interligação dos dados enviados pelo sensor e o robô. 
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm,scale=0.7]{roomba.png}
+	\caption{Estrutura do robô Roomba com o sensor LDC100EVM }\label{fig:roomba2}
+	\end{figure}
 	
 	\newpage
 	
-	\section{Material disponível}
 	
 	
-	\begin{description}
-	  \item[Robô] Robô Roomba 555 com interface USB
-	  \item[API] \textit{Wrapper} para comunicar com o robô 
-	  \item[Detector de Metal] LDC100EVM
-	  \item[Computador] Dois portateis(um pequeno e um grande) com o sistema operativo Ubuntu\footnote{Ubuntu 13.04}
-	  \item[Bobine] 1.71 mH
-	  \item[Condensador] 3.09 nF
-	  \item[LCR Meter] Versão 186
-	  \item[Teclado] Teclado Wireless
-	  \item[USB Hub] Quatro portas
-	\end{description}
-
-
 	
 	
-	\section{LDC100EVM}
+	\subsubsection{Introdução ao sensor}
 	
 	
 	\tab O LDC100EVM é um sensor indutivo que permite medir a presença de metais retornando duas variavéis: posição do metal e a frequência de oscilação.
@@ -409,7 +466,7 @@
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=90mm,scale=0.3]{im1.JPG}
+	\includegraphics[width=85mm,scale=0.3]{im1.JPG}
 	\caption{Sensor LDC1000EVM}\label{fig:sensor}
 	\end{figure}
 	
@@ -445,7 +502,7 @@
 	
 	
 
-	\newpage
+	
 	
 	
 	
@@ -479,35 +536,6 @@
 	
 	
 	
-	
-	\section{Solução proposta}
-	
-	
-	\subsection{Hardware}
-	
-	 Como podemos ver na figura \ref{fig:circuito4}, foi soldado numa placa PCB o condensador e foram feitas as ligações necessárias de modo a facilitar
-	a mudança de bobines e para garantir que o circuito está em contacto com os componentes. Foi ainda soldado ao sensor dois fifos conectores para tornar mais fácil o seu uso.
-	
-	
-	
-	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=50mm,scale=0.7]{circuito4.jpg}
-	\caption{Placa PCB + Sensor }\label{fig:circuito4}
-	\end{figure}
-	
-	Em termos de ligações é mais facil de compreender na figura \ref{fig:roomba2},
-	onde é possivel ver a ligação dos componentes ao Roomba e ao sensor. O computador vai comunicar com o Roomba e receber dados do sensor.
-	Através da plataforma ROS é feito o controlo do Roomba por teclado e feita a interligação dos dados enviados pelo sensor e o robô. 
-	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=100mm,scale=0.7]{roomba.png}
-	\caption{Estrutura do robô Roomba com o sensor LDC100EVM }\label{fig:roomba2}
-	\end{figure}
-	
-	\newpage
 	\subsubsection{Arquitectura}
 	\tab Em termos de hardware para este trabalho foi utilizado um computador que vai controlar o Roomba e o sensor LCD1000EVM.
 	No sensor foi ainda substituída a bobine que vinha com o mesmo por uma bobine e um condensador de valores por nós pretendidos. \\
@@ -624,13 +652,24 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	\subsection{Software}
 	
 	\todo[inline]{Colocar o pseudo Código}
-
+\todo[inline]{Colocar os comandos para executar, as portas sudo chmod e os launchs}
+\todo[inline]{nos das tfs e nos a comunicarem- imagem}
+%\todo[inline]{}
 	
 	  \subsubsection{Pseudocódigo}
 	
       \subsubsection{Utilização do ROS}
 
-\tab Utilizámos o Robot Operating System (ROS) como plataforma de comunicação entre os dois periféricos por nós utilizados e o computador. Com o ROS é possível implementar bibliotecas de cliente ROS como roscpp, rospy ou roslisp. Por outras palavras significa que facilmente se consegue adaptar programas criados em outras línguas (de entre C++, Python e LISP). No nosso caso em específico adaptámos o programa de leitura do sensor em cpp para a plataforma ROS. Numa segunda parte através do api disponibilizado pelo Gonçalo Cabrita e pelo Bruno Gouveia conseguimos controlar o Roomba pelo teclado do computador. Através da leitura dos encoders e do controlo dos motores foi possível controlar a velocidade angular e linear do robô. \\ \tab Utilizando os nós do ROS foi possível assim controlar o robô e utilizá-lo para a deteção e marcação nas minas. De uma forma mais detalhada foi usada como referência a transformada "ODOM" que nos fornece a posição inicial em que o robô se encontra, com o nó entre esta transformada e o base link do Roomba sabe-se sempre a posição relativa à posição inicial. De seguida criando o nó da transformada sensor(criada por nós) é assim possível, com a informação devolvida pelo sensor, saber se o robô se encontra na presença de uma mina. Caso seja verificada a presença de uma mina são enviadas as coordenadas (x,y,z) para uma função "markers" que irá marcar no mapa as minas em relação a "ODOM", ou seja em relação à posição inicial do robô.
+	\tab Utilizámos o Robot Operating System (ROS) como plataforma de comunicação entre os dois periféricos por nós utilizados e o computador.
+	Com o ROS é possível implementar bibliotecas de cliente ROS como roscpp, rospy ou roslisp. Por outras palavras significa que facilmente se 
+	consegue adaptar programas criados em outras línguas (de entre C++, Python e LISP). No nosso caso em específico adaptámos o programa de leitura
+	do sensor em cpp para a plataforma ROS. Numa segunda parte através do API disponibilizado pelo Gonçalo Cabrita\cite{gitgon} e pelo Bruno Gouveia\cite{gitbun} conseguimos controlar
+	o Roomba pelo teclado do computador. Através da leitura dos encoders e do controlo dos motores foi possível controlar a velocidade angular e linear do robô. \\ 
+	\tab Utilizando os nós do ROS foi possível assim controlar o robô e utilizá-lo para a deteção e marcação nas minas. De uma forma mais detalhada foi usada como 
+	referência a transformada "ODOM" que nos fornece a posição inicial em que o robô se encontra, com o nó entre esta transformada e o base link do Roomba sabe-se 
+	sempre a posição relativa à posição inicial. De seguida criando o nó da transformada sensor(criada por nós) é assim possível, com a informação devolvida pelo sensor,
+	saber se o robô se encontra na presença de uma mina. Caso seja verificada a presença de uma mina são enviadas as coordenadas (x,y,z) para uma função "markers" que irá
+	marcar no mapa as minas em relação a "ODOM", ou seja em relação à posição inicial do robô.
 
 
 	\subsubsection{Comunicação com o sensor}

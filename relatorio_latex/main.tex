@@ -435,8 +435,8 @@
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=50mm,scale=0.7]{circuito4.jpg}
-	\caption{Placa PCB + Sensor }\label{fig:circuito4}
+	\includegraphics[width=80mm,scale=0.7]{circuito4.jpg}
+	\caption{Placa breadboard + Sensor }\label{fig:circuito4}
 	\end{figure}
 	
 	Em termos de ligações é mais facil de compreender na figura \ref{fig:roomba2},
@@ -445,7 +445,7 @@
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=100mm,scale=0.7]{roomba.png}
+	\includegraphics[width=120mm,scale=0.7]{roomba.png}
 	\caption{Estrutura do robô Roomba com o sensor LDC100EVM }\label{fig:roomba2}
 	\end{figure}
 	
@@ -707,7 +707,6 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	
 	
 	  
-	  \subsubsection{Pseudocódigo}
 	
       \subsubsection{Utilização do ROS}
 
@@ -728,7 +727,7 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 
 	\tab A primeira parte deste trabalho foi concluir que o sensor utiliza porta série como protocolo de comunicação quando comunica com o computador.
 	Como tal, para facilitar o uso futuro deste sensor criámos código para as leituras do sensor em três plataformas diferentes de programação.
-	Adaptámos por isso o nosso código às plataformas \href{run:./code/c++.cpp}{\color{blue}C++}, \href{run:./code/matlab.m}{\color{blue}Matlab} e \href{run:./code/python.py}{\color{blue}Python}.
+	Adaptámos por isso o nosso código às plataformas C++, Matlab e Python\footnote{O código fonte encontra-se em anexo}.
 	Estes três códigos encontram-se mais a baixo na tabela(Fazer referencia à tabela).\\
 	\tab Analisando as partes mais importantes do código, o primeiro passo é definir a porta série pela qual estamos a comunicar, no nosso caso em particular
 	foi a porta "COM9" em \textit{Windows} e "/dev/ttyACM0" em \textit{Linux}.
@@ -833,5 +832,23 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 \bibliographystyle{plain}
 \bibliography{mylib}
 	
+	\newpage
+	
+	  \section{Anexos}
+	  
+	  \subsection{Código C++}
+	  \lstinputlisting{./code/c++.cpp}
+	  
+	  \newpage
+	  
+	  \subsection{Código Python}
+	  \lstinputlisting{./code/python.py}
+	  \newpage
+	  
+	
+	\subsection{Código Matlab}
+	  \lstinputlisting{./code/matlab.m}
+	  
+	  
 	
 \end{document}

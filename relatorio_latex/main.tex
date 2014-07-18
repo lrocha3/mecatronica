@@ -224,7 +224,7 @@
 	\mbox{}
 	}
 
-
+      
 	
 	
 	%% PDF definitions:
@@ -265,7 +265,7 @@
 	Para o controlo do robô foi necessário fazer uso de um API\cite{apiroomba} que permitisse a comunicação com o mesmo e a plataforma ROS. Com este foi possível controlar os movimentos
 	do robô através do teclado usando um terminal.\\
 	\tab Quando na presença de metais e usando os dados devolvidos pelo sensor - proximidade e frequência - é possivel determinar se o robô se encontra perante uma mina.
-	Com base neste princípio é possível detectar a presença de minas. \\
+	Com base neste princípio é possível detectar a presença de minas.
 
 	\end{abstract}
 	
@@ -650,6 +650,51 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 
 
 	\subsection{Software}
+	
+	\subsubsection{Como executar}
+	
+	Em termos de aplicação ROS, elaboramos dois tipos de programas. O primeiro contêm um nó que lê valores do sensor e publica esses dados
+	usando mensagens e um outro nó que recebe esses dados e imprime para o ecrã. O segundo usa um ó que publica os dados por mensagens e um outro nó
+	recebe esses dados e analisa se se trata de uma mina e em caso afirmativo marca-a num mapa desenhando um cubo de pequenas dimensões na posição em que detectou a mina.
+	Abaixo encontram-se os passos necessários para os executar:
+	
+	
+	
+	
+
+	 Primeiro Codigo:
+	  	
+	  \begin{enumerate}
+	  \item roscore
+	  \item rosrun sensor le\_sensor treshold(int)
+	  \item rosrun sensor recebe\_dados
+	
+	  \end{enumerate}
+	
+	Segundo Codigo:
+	
+	\begin{enumerate}
+	 \item roscore
+	 \item roslaunch roomba\_bringup roomba\_555.launch
+	 \item roslaunch sensor sensor.launch
+	 \item rosrun sensor le\_sensor treshold (int)
+	 \item rosrun sensor points\_sensor
+	 \item roslaunch roomba\_teleop keyboard\_teleop.launch
+	 \item rosrun rviz rviz
+	\end{enumerate}
+
+
+	
+	
+	
+	
+	
+	\textbf{Nota I}: Treshold(int) é o valor para o qual o programa identifica como sendo uma mina.\\
+	\textbf{Nota II}: No rviz é preciso carregar o modelo do robot, as $tf's$, os markers e o array de markers.
+	
+	
+	
+	
 	
 	\todo[inline]{Colocar o pseudo Código}
 \todo[inline]{Colocar os comandos para executar, as portas sudo chmod e os launchs}

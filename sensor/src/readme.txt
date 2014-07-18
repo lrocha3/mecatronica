@@ -3,8 +3,8 @@ Tuturial para executar:
 // Listar portas
 dmesg | grep tty
 // Permissoes livres em todas as portas
-sudo chmod 777 /dev/tty*
-
+sudo chmod 777 /dev/ttyACM0
+sudo chmod 777 /dev/ttyUSB0
 
 Programa I:
 

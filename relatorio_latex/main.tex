@@ -296,10 +296,10 @@
 	
 	
 	
-	\newpage
+	%\newpage
 		
 	
-	\listoftodos
+	%\listoftodos
 	
 	\newpage
 	
@@ -420,15 +420,15 @@
       
 
 	
-	
-	
 	\section{Solução proposta}
 	
 	
 	\subsection{Hardware}
 	
-	 Como podemos ver na figura \ref{fig:circuito4}, foi soldado numa placa PCB o condensador e foram feitas as ligações necessárias de modo a facilitar
+	 
+	 Como podemos ver na figura \ref{fig:circuito4}, foi colocado numa breadboard o condensador e foram feitas as ligações necessárias de modo a facilitar
 	a mudança de bobines e para garantir que o circuito está em contacto com os componentes. Foi ainda soldado ao sensor dois fifos conectores para tornar mais fácil o seu uso.
+	
 	
 	
 	
@@ -537,18 +537,29 @@
 	
 	
 	\subsubsection{Arquitectura}
+
 	\tab Em termos de hardware para este trabalho foi utilizado um computador que vai controlar o Roomba e o sensor LCD1000EVM.
-	No sensor foi ainda substituída a bobine que vinha com o mesmo por uma bobine e um condensador de valores por nós pretendidos. \\
-	\tab O robô Roomba encontra-se conectado por usb a um computador que o controla.
+	No sensor foi ainda substituída a bobine por uma bobine e um condensador de valores por nós pretendidos. \\
+	\tab O robô Roomba encontra-se conectado por usb a um computador que o controla através do teclado.
 	Este computador encontra-se ainda ligado a um sensor LCD1000EVM que por sua vez tem ligado a si uma bobine e um condensador por nós projectados e adaptados.\\
 	\tab Na figura \ref{fig:robo} é vísivel o robô já adaptado à nova bobine. Foi necessário criar uma estrutura que suportasse a bobine mas que mantivesse a estabilidade do robô,
 	para tal é necessário o uso de contra-pesos como é vísivel.
 	
 	\begin{figure}[ht]
 	\centering
-	\includegraphics[width=65mm,scale=0.7]{circuitom.jpg}
+	\includegraphics[width=100mm,scale=0.7]{circuitom.jpg}
 	\caption{Imagem real do robô}\label{fig:robo}
 	\end{figure}
+	 Na figura \ref{fig:robo} é vísivel o robô já adaptado à nova bobine. Foi necessário criar uma estrutura que suportasse a bobine mas que mantivesse a estabilidade do robô,
+	para tal é necessário o uso de contra-pesos como é vísivel.\\
+	\tab A estrutura que suporta a bobine é facilmente removível estando apenas presa por abraçadeiras. Esta estrutura garante tanto a estabilidade do robô como da bobine.
+	A bobine encontra-se ligada em paralelo ao condensador e ao sensor numa
+	breadboard algo que pode ser visto na figura \ref{fig:circuito4}.
+	
+	
+	
+	
+	
 	\newpage
 	
 	
@@ -557,8 +568,7 @@
 	
 	
 	
-	
-\newpage
+
 	\subsubsection{Implementação}
 	Como foi anteriormente explicado,  o circuito pode ser alterado e dimensionado para se trabalhar na gama de valores desejada. A seguir iremos explicar os passos necessários para implementar o novo circuito e adaptá-lo ao sensor.
 	\setlength{\parskip}{10pt}
@@ -584,8 +594,8 @@
 	\end{figure}
 	
 	\newpage
-	Com o auxílio do medidor ``LCR meter'' figura \ref{fig:LCR} conseguimos adaptar o sensor à nova bobine. Para cumprir o primeiro passo referido anteriormente, primeiro medimos a indutância da nova bobine e de seguida escolhemos
-	um condensador e medimos a sua capacitância como mostra a figura \ref{fig:LC}.
+	Com o auxílio do medidor LCR meter figura \ref{fig:LCR} conseguimos adaptar o sensor à nova bobine. Para cumprir o primeiro passo referido anteriormente, primeiro medimos a indutância da nova bobine e de seguida escolhemos
+	um condensador e medimos a sua capacitância.
 	
 	\begin{figure}[ht]
 	\centering
@@ -595,39 +605,23 @@
 	
 	
 	
-	\tab Tivemos que garantir que o novo circuito se encontra na gama da frequência de ressonância, como tal utilizando a \eqref{freq_ress} calculámos a nova frequência de ressonânica e obtivemos:
+	 Medimos o condensador e a bobine utilizando o aparelho da figura \ref{fig:LCR} obtendo 3.09 nF 
+	e 1.71 mH. De seguida, utilizando \eqref{freq_ress} calculámos a nova frequência de ressonânica e obtivemos:
 	
 	\begin{equation}\label{freqr}
-	 f_\text{ressonância} = \frac{1}{2\pi\sqrt{LC}}=\frac{1}{2\pi\sqrt{1.7098\times10^{-3}\times3.0863\times10^{-9}}}=69.283KH_z
+	 f_\text{ressonância} =\frac{1}{2\pi\sqrt{1.7098\times10^{-3}\times3.0863\times10^{-9}}}=69.283 kHz
 	\end{equation}
-	Verifica-se que a nova frequência de ressonância se encontra entre $5KH_z$ e $5MH_z$
 	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=100mm,scale=0.3]{LC.png}
-	\caption{Medição da indutância da bobine e da capacitância do condensador}\label{fig:LC}
-	\end{figure}
+	Como podemos concluir, a a frequência calculada está dentro da gama pretendida. 
 	
-	De seguida anotámos o valor de $R_p$ na ausência e na presença de objectos condutores como é visível nas imagens \ref{fig:rpmax} e \ref{fig:rpmin} respectivamente. Foi ainda anotada a frequência de varrimento
-	que é vísivel em qualquer uma das imagens seguintes, sendo o seu valor $66.667KH_z$.
 	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=70mm,scale=0.3]{RP_MAX.jpg}
-	\caption{Resistência do paralelo ($R_p$) na ausência de objectos condutores}\label{fig:rpmax}
-	\end{figure}
-	\todo[inline]{Colocar as duas unidas}
+	De seguida anotámos o valor de $R_p$ na ausência e na presença de objectos condutores obtendo
+	os seguintes valores respectivamente 18.29 k$\Omega$ e 8.79 k$\Omega$. Para a obtençã destes valores
+	foi usada uma frequência de varrimento de valor 66.667 kHz.
 	
-	\begin{figure}[ht]
-	\centering
-	\includegraphics[width=70mm,scale=0.3]{RP_MIN.jpg}
-	\caption{Resistência do paralelo ($R_p$) na presença de objectos condutores}\label{fig:rpmin}
-	\end{figure}
-	
-	\newpage
 	
 	Garantimos assim que também a resistência de ressonância se encontra dentro da gama de valores do referidos anteriormente.
-	Por fim, fizémos a alteração dos registos do sensor para se adaptar aos novos valores, pelo que foram modificados os seguintes registos :
+	Por fim, fizémos a alteração dos registos do sensor para se adaptar aos novos valores, pelo que foram modificados os seguintes registos:
 	\begin{figure}[ht]
 	\centering
 	\includegraphics[width=100mm,scale=0.3]{registos.png}
@@ -636,9 +630,9 @@
 	
 	
 	\begin{enumerate}
-	 \item $RP_{MAX}$ foi alterado para $38.785K\Omega$ , valor que foi aproximado por excesso como era exigido.
-	 \item $RP_{MIN}$ foi alterado $4.309K\Omega$, valor que foi aproximado por defeito como era exigido.
-	 \item Sensor frequency foi alterado para $52.231KH_z$ , valor que foi aproximado para o valor mais próximo de $80\%$ da frequência de varrimento, por defeito.
+	 \item ${R_P}_{MAX}$ foi alterado para 38.785 k$\Omega$ , valor que foi aproximado por excesso como era exigido.
+	 \item ${R_P}_{MIN}$ foi alterado 4.309 k$\Omega$, valor que foi aproximado por defeito como era exigido.
+	 \item Sensor frequency foi alterado para 52.231 kHz , valor que foi aproximado para o valor mais próximo de $80\%$ da frequência de varrimento, por defeito.
 	\end{enumerate}
 	
 	Os registos que foram alterados encontram-se a vermelhor na figura \ref{fig:registos}.
@@ -668,7 +662,6 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	  \item roscore
 	  \item rosrun sensor le\_sensor treshold(int)
 	  \item rosrun sensor recebe\_dados
-	
 	  \end{enumerate}
 	
 	Segundo Codigo:
@@ -680,27 +673,40 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	 \item rosrun sensor le\_sensor treshold (int)
 	 \item rosrun sensor points\_sensor
 	 \item roslaunch roomba\_teleop keyboard\_teleop.launch
-	 \item rosrun rviz rviz
+	 \item rosrun rviz rviz \hfill
 	\end{enumerate}
 
 
+	No parametro Treshold(int) é preciso colocar um inteiro que funcionará como comparador. Quanto á configuração do rviz é necessário 
+	carregar o modelo do robot, as $tf's$, os markers e o array de markers. Para poder executar correctamente o programa é
+	necessário fazer sudo chmod 777 /dev/ttyUSB0 e sudo chmod 777 /dev/ttyACM0 para garantir que conseguimos abrir a porta série do Roomba
+	e do sensor. 
+	
+	\subsubsection{Estrutura do Código}
+	
+	Como é possivel observar na figura \ref{fig:estrutura_codigo}, o código principal que é executado interliga-se entre os diferentes programas e o Roomba da 
+	seguinte maneira:
+	
+	\begin{figure}[ht]
+	\centering
+	\includegraphics[width=140mm,scale=1]{estrutura_codigo.png}
+	\caption{Interlicação dos diferentes programas}\label{fig:estrutura_codigo}
+	\end{figure}
+	
+	Em termos prácticos o ficheiro \textbf{le\_sensor.cpp} comunica co o sensor por porta série e publica 
+	os dados numa variavel predefinida no ROS, mensagens do tipo geometry\_msgs::Vector3Stamped.
+	O ficheiro \textbf{point\_sensor.cpp} sempre que é publicado alguma mensagem com o frame\_id sensor é
+	recebida calcula-se a posição do sensor no mapa virtual e verifica-se se está na presença de uma mina.
+	O ficheiro launch \textbf{sensor.launch} é uma transformação do sensor em relacão é transformada odom (odometria).
+	Como o sensor não apresenta nem possibilidade de translação nem rotação podemos simplesmente fazer um
+	static transform publisher\cite{statictransform}. Para comandar o Roomba é usado o ficheiro launch
+	\textbf{keyboard\_teleop.launch}, que contém a velocidade linear e a velocidade de rotação default. Este launcher 
+	exeuta um executalvel que lê do  terminal as setas do teclado e sendo assim é possivel comandar/deslocar
+	o robo.
 	
 	
 	
-	
-	
-	\textbf{Nota I}: Treshold(int) é o valor para o qual o programa identifica como sendo uma mina.\\
-	\textbf{Nota II}: No rviz é preciso carregar o modelo do robot, as $tf's$, os markers e o array de markers.
-	
-	
-	
-	
-	
-	\todo[inline]{Colocar o pseudo Código}
-\todo[inline]{Colocar os comandos para executar, as portas sudo chmod e os launchs}
-\todo[inline]{nos das tfs e nos a comunicarem- imagem}
-%\todo[inline]{}
-	
+	  
 	  \subsubsection{Pseudocódigo}
 	
       \subsubsection{Utilização do ROS}
@@ -738,13 +744,7 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	  
 	   
 	
-	
-	
-
-	
-
-
-	
+		
 	\subsubsection{Protocolo VNC}
 	
 	 \tab Este protocolo baseia-se no conceito de partilha remota de um computador. Para isso existe um computador que partilha o monitor
@@ -766,24 +766,60 @@ Com todos os passos cumpridos o novo sensor ficou pronto a ser utilizado.
 	
 	\section{Resultados}
 	
-	\todo[inline]{Colocar a simulação rviz}
-	\todo[inline]{Robo a andar com rviz activo}
-	\todo[inline]{Foto a controlar com o keyboard e a detectar minas}
+
+	
+	Realizamos diversos testes de modo a colocar à prova o robô em diversas situações. 
+	Acabámos por perceber que o robô detecta minas mesmo quando estas se encontram debaixo do solo. \\
+	Por fim acabámos por testar
+	o robô numa superfície em que garantimos que não existem quaisquer condutor. Fizemos isto poque,
+	no sítio em que nos encontramos a trabalhar a instalação eléctrica foi toda feita pelo solo
+	e como consequência o robô detecta minas em diversos sítios algo que é lógico dado que os campos magnéticos gerados 
+	pelos cabos eléctricos vão interegir com o campo magnético do nosso sensor. Na figura \ref{fig:resultado} temos identificadas três minas,
+	duas visíveis e uma enterrada e temos o robô na sua posição inicial. \\
+	\tab A figura \ref{fig:resultado_final} foi tirada de um ângulo contrário à direção inicial do robô sendo que o mapa virtual obtido é o o mapa real 
+
+	
+	
+	
+	\begin{figure}[ht]
+	  \centering
+	  \begin{subfigure}{0.5\textwidth}
+	    \centering
+	    \includegraphics[width=70mm,scale=0.9]{teste_resultado.jpg}
+	    \caption{Mapa real}
+	    \label{fig:resultado}
+	  \end{subfigure}%
+	  \begin{subfigure}{0.5\textwidth}
+	    \centering
+	    \includegraphics[width=80mm,scale=0.9]{teste.png}
+	    \caption{Mapa virtual}
+	    \label{fig:teste}
+	  \end{subfigure}
+	  
+	  \caption{Teste para detecção de minas num labirinto}
+	  \label{fig:resultado_final}
+	  \end{figure}
+	
+	
+	
+	
+	
+	
 	
 	
 	\section{Conclusões}
 	
 
-         
-       \tab Com este projecto foi possível adaptar o robô ROOMBA para a deteção de minas com o auxílio do sensor LCD1000EVM. Numa primeira parte do projecto foi criada a interface para que o sensor pudesse ser utilizado em Linux. Com o auxílio 
-	da plataforma ROS (Robot Operatyng System) foi possível fazer a comunicação dos três periféricos ( computador, robô e sensor) esta plataforma permitiu ainda criar o controlo por teclado da velocidade e direcção do robô. Por fim
-	foi possível adptar o sensor para uma bobine por nós desejada.\\ \tab Este projecto permitiu perceber a potencialidade tanto da plataforma ROS como do sensor LCD1000EVM. A grande vantagem da plataforma ROS é que no futuro muito facilmente
-	qualquer pessoa poderá adaptar este sensor a outros robôs ou outros sistemas robóticos, é a vantagem do sistema de transformadas em que o ROS trabalha. O sensor LCD1000EVM tem a grande vatagem de com alguns pequenos passos se poder modificar para qualquer bobine 
-	que o utilizador pretenda criando-se assim um sensor à medida do que o utilizador precisa.
-
-
-         
-       
+     \tab Com este projecto foi possível adaptar o robô ROOMBA para a deteção de minas com o auxílio do sensor LCD1000EVM. 
+       Numa primeira parte do projecto foi criada a interface para que o sensor pudesse ser utilizado em Linux. Com o auxílio 
+    da plataforma ROS (Robot Operatyng System) foi possível fazer a comunicação dos três periféricos ( computador, robô e sensor) esta plataforma permitiu ainda 
+    criar o controlo por teclado da velocidade e direcção do robô. Por fim
+    foi possível adaptar o sensor para uma bobine por nós desejada.\\ \tab Este projecto permitiu perceber a potencialidade tanto da plataforma ROS como do sensor LCD1000EVM. 
+    A grande vantagem da plataforma ROS é que no futuro muito facilmente
+    qualquer pessoa poderá adaptar este sensor a outros robôs ou outros sistemas robóticos, isto deve-se à vantagem do sistema de transformadas em que o ROS trabalha.
+    O sensor LCD1000EVM tem a grande vantagem de com alguns pequenos passos se poder modificar e adaptar a qualquer bobine 
+    que o utilizador pretenda, criando-se assim um sensor à medida do que o utilizador precisa.\\
+    \tab Por fim foi conseguido utilizar o robô para a detecção de minas mesmo quando estas se encontram enterradas.
 
 
 	

@@ -60,6 +60,9 @@ printf("\n\nThreshold: %d",threshold);
    geometry_msgs::Vector3Stamped msg;
 
 
+
+
+
   int USB;
   int ultimo;
   char buf[16];
@@ -126,23 +129,24 @@ printf("\n\nThreshold: %d",threshold);
     msg.vector.x = prox_int;
     msg.vector.y = freq_int;
 	
-    // Faço a media de tres amostras
+    
   
     media = (int) (freq_int_anterior+freq_int_anterior_anterior+freq_int)/3;    
-
-
-    if( media < threshold )
-      msg.vector.z = 1;
-    else
-      msg.vector.z = 0;
-
-   // Actualizo as duas amostras anteriores
-
-   freq_int_anterior_anterior = freq_int_anterior;    
-   freq_int_anterior = freq_int;     
+	
+        
     
+    if( media < threshold && media > 10000){	
+	msg.vector.z = 1;
+	}
+    else{
+	
+	msg.vector.z = 0;
 
+   }
 
+	freq_int_anterior_anterior = freq_int_anterior;    
+    	freq_int_anterior = freq_int;
+	   
 
     msg.header.stamp=ros::Time::now();
     msg.header.frame_id="sensor";

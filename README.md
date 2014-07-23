@@ -3,6 +3,8 @@ mecatronica
 
 This project uses a LDC100EVM sensor and a Roomba!
 
+Note: LDC1000EVM in Stream Mode it gives 0x####,0x#### where the first hex number is the proximity and the second is the frequency.
+
 It reads the data from the sensor and then i mark in rviz the position x, y, z of the mine.
 
 Comandos necessários:
